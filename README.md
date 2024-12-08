@@ -9,3 +9,8 @@ Run the script directly with:
 ```bash 
 $ MONGO_URL='mongodb://localhost:27017/' INTERVAL=20 python apilog/apilog.py
 ```
+
+Run the script directly with:
+```bash 
+$ MONGO_URL='mongodb://localhost:27017/' python apilog/apisave.py
+```
