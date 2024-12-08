@@ -4,6 +4,7 @@ import time
 
 import os
 MONGO_URL = os.getenv('MONGO_URL')
+INTERVAL = os.getenv('INTERVAL')
 
 if MONGO_URL==None:
     print('Lembra indicar a variable MONGO_URL')
@@ -11,12 +12,17 @@ if MONGO_URL==None:
     print('p.ex: docker run --rm -e MONGO_URL=mongodb://localhost:27017/')
     exit(1)
 
+if INTERVAL==None:
+    print('Intevalo predeterminado de 120 segundos entre peticións')
+    INTERVAL=120
+
 # configuration variables
 api_url = "http://api.citybik.es/v2/networks/bicicorunha"
 mongo_url = MONGO_URL
 mongo_db_name = "citybik_database"
 mongo_db_collection_name = "bicicorunha_stations"
 
+# get data from api
 def get_data(url):
     try:
         response = requests.get(url)
@@ -26,16 +32,16 @@ def get_data(url):
         print(f"Failed to retrieve data from API: {e}")
         return None
     
-def mongo_store(data,collection):
-    if data is not None:
+# store data in MongoDB
+def mongo_store(stations,collection):
+    if stations is not None:
         try:
-            collection.insert_many(data)
+            collection.insert_many(stations)
             print("Data stored successfully in MongoDB")
         except Exception as e:
             print(f"Failed to store data in MongoDB: {e}")
     else:
         print("Failed to retrieve data from API")
-
 
 # Set up MongoDB connection
 try:
@@ -46,11 +52,13 @@ except pymongo.errors.ConnectionFailure as e:
     print(f"Could not connect to MongoDB: {e}")
     exit(1)
 
-
-while True:
-    data = get_data(api_url)
-    stations = data['network']['stations']
-    mongo_store(stations,collection)
-    time.sleep(120)
-
+# Main loop to fetch and store data at specified intervals
+try:
+    while True:
+        data = get_data(api_url)
+        stations = data['network']['stations']
+        mongo_store(stations,collection)
+        time.sleep(int(INTERVAL))  
+except KeyboardInterrupt:
+    print("\nInterrupted by user. Exiting")
 
