@@ -54,6 +54,10 @@ You can also create the docker image from code using Dockerfile in this reposito
 
 ### Run with Docker-compose
 
-You can crete your own infrastructure with two containers: one for the logger and other one for mongo database. Use the docker-compose.yml file in this repo:
+You can create your own infrastructure with two containers: one for the logger and other one for mongo database. Use the docker-compose.yml file in this repo:
 
 `docker compose up -d`
+
+Use the *watched* version of docker compose file if you want that the container upgrades automatically when a new image is published.
+
+`docker compose -f docker-compose-watch.yml up -d`
