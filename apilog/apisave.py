@@ -58,9 +58,13 @@ except pymongo.errors.ConnectionFailure as e:
     exit(1)
 
 # Main
+print('Cargando datos...')
 data = load_data_mongo(collection)
+print('Creando DataFrame')
 df = pd.DataFrame(data)
+print('Escribindo CSV')
 df.to_csv('bicicorunha_data.csv')
+print('Escribindo PARQUET')
 df.to_parquet('bicicorunha_data.parquet')
 
     
