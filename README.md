@@ -7,10 +7,10 @@ It also provides a script to save the data from MongoDB to CSV and PARQUET files
 ## Citybikes API
 [Citybikes](https://citybik.es/) API is a public API that provides real-time information about bike sharing systems in various cities around the world. This project uses this API to log data and save it for further analysis.
 
-This project only usus [Citybikes API](https://api.citybik.es/v2/) to get data of the city of Coruña.
+This project only uses [Citybikes API](https://api.citybik.es/v2/) to get data of the city of Coruña.
 
 ## Installation
-1. Clone this repository
+1. Clone this repository: `git clone https://github.com/bigdatawirtz/apilog.githttps://github.com/bigdatawirtz/apilog.git`
 2. Install dependencies using pip: `pip install -r requirements-full.txt`
 
 This requirements file includes all dependencies required for both scripts and also for running jupyter notebooks.
